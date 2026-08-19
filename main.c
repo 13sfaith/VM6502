@@ -5,7 +5,7 @@
 
 int main() {
     bus_t *bus = malloc(sizeof(bus_t));
-    bus->device_count = 0;
+    bus_init(bus);
 
     cpu6502_t *cpu = malloc(sizeof(cpu6502_t));
 
