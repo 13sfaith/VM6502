@@ -20,19 +20,13 @@ void mem_init(bus_t *bus, uint16_t start, uint16_t size) {
     return;
 }
 
-uint16_t convert_address_to_index(mem_dev_t *device, uint16_t addr) {
-    return addr - device->start;
-}
-
 uint8_t read(void *device, uint16_t addr) {
     mem_dev_t *memory_instance = device;
-    uint16_t memory_index = convert_address_to_index(memory_instance, addr);
     return memory_instance->data[addr];
 }
 
 void write(void *device, uint16_t addr, uint8_t val) {
     mem_dev_t *memory_instance = device;
-    uint16_t memory_index = convert_address_to_index(memory_instance, addr);
-    memory_instance->data[memory_index] = val;
+    memory_instance->data[addr] = val;
     return;
 }

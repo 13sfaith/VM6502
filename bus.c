@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 
 #include "bus.h"
@@ -22,4 +23,31 @@ int bus_attach(bus_t *bus, uint16_t start, uint16_t end, bus_read_fn read, bus_w
     bus->device_count++;
 
     return 0;
+}
+
+bus_device_t *get_bus_device(bus_t *bus, uint16_t addr) {
+    for (int i = 0; i < bus->device_count; i++) {
+        if (bus->devices[i].start > addr) {
+            continue;
+        }
+        if (bus->devices[i].end < addr) {
+            continue;
+        }
+        return &bus->devices[i];
+    }
+    fprintf(stderr, "Invalid get_bus_device address: %hx", addr);
+    exit(1);
+}
+
+uint8_t bus_read(bus_t *bus, uint16_t addr) {
+    bus_device_t *device = get_bus_device(bus, addr);
+    uint16_t normalized_addr = addr - device->start;
+    return device->read(device->device, normalized_addr);
+}
+
+void bus_write(bus_t *bus, uint16_t addr, uint8_t val) {
+    bus_device_t *device = get_bus_device(bus, addr);
+    uint16_t normalized_addr = addr - device->start;
+    device->write(device->device, normalized_addr, val);
+    return;
 }
