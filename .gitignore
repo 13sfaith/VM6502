@@ -1,2 +1,5 @@
 .DS_Store
 vm6502
+vm6502.dSYM/
+
+ROM/

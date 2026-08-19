@@ -35,7 +35,7 @@ bus_device_t *get_bus_device(bus_t *bus, uint16_t addr) {
         }
         return &bus->devices[i];
     }
-    fprintf(stderr, "Invalid get_bus_device address: %hx", addr);
+    fprintf(stderr, "Invalid get_bus_device address: %hx\n", addr);
     exit(1);
 }
 

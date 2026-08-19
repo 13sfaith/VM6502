@@ -12,7 +12,7 @@ void mem_init(bus_t *bus, uint16_t start, uint16_t size) {
     mem_dev->start = start;
     mem_dev->end = start+size;
 
-    if (bus_attach(bus, mem_dev->start, mem_dev->end, read, write, mem_dev) != 0) {
+    if (bus_attach(bus, mem_dev->start, mem_dev->end, mem_read, mem_write, mem_dev) != 0) {
         perror("Failed to initalize memory");
         exit(1);
     }
@@ -20,12 +20,12 @@ void mem_init(bus_t *bus, uint16_t start, uint16_t size) {
     return;
 }
 
-uint8_t read(void *device, uint16_t addr) {
+uint8_t mem_read(void *device, uint16_t addr) {
     mem_dev_t *memory_instance = device;
     return memory_instance->data[addr];
 }
 
-void write(void *device, uint16_t addr, uint8_t val) {
+void mem_write(void *device, uint16_t addr, uint8_t val) {
     mem_dev_t *memory_instance = device;
     memory_instance->data[addr] = val;
     return;
