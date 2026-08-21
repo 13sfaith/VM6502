@@ -2,4 +2,6 @@
 vm6502
 vm6502.dSYM/
 
-ROM/
+ROM/rom_data
+
+*.swp
